@@ -1,0 +1,70 @@
+Initialize engine version: 5.5.2f1 (3829d7f588f3)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [nvldumd.dll 23.21.13.8843]
+    Renderer: NVIDIA GeForce GTX 1050 Ti
+    Vendor:   NVIDIA
+    VRAM:     3072 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=0 INTZ=1 NULL=1 RESZ=0 SlowINTZ=0 ATOC=1 BC4=1 BC5=1
+Begin MonoManager ReloadAssembly
+Platform assembly: F:\steamDomo\Steamworks.NET-Example-master\lobbyTest_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading F:\steamDomo\Steamworks.NET-Example-master\lobbyTest_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: F:\steamDomo\Steamworks.NET-Example-master\lobbyTest_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading F:\steamDomo\Steamworks.NET-Example-master\lobbyTest_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: F:\steamDomo\Steamworks.NET-Example-master\lobbyTest_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading F:\steamDomo\Steamworks.NET-Example-master\lobbyTest_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: F:\steamDomo\Steamworks.NET-Example-master\lobbyTest_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading F:\steamDomo\Steamworks.NET-Example-master\lobbyTest_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: F:\steamDomo\Steamworks.NET-Example-master\lobbyTest_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading F:\steamDomo\Steamworks.NET-Example-master\lobbyTest_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: F:\steamDomo\Steamworks.NET-Example-master\lobbyTest_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
+Loading F:\steamDomo\Steamworks.NET-Example-master\lobbyTest_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
+- Completed reload, in  0.030 seconds
+Platform assembly: F:\steamDomo\Steamworks.NET-Example-master\lobbyTest_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: F:\steamDomo\Steamworks.NET-Example-master\lobbyTest_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 3.412925 ms
+Received stats and achievements from Steam
+
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+SteamUserStats.GetAchievement failed for Achievement ACH_TRAVEL_FAR_SINGLE1
+Is it registered in the Steam Partner site?
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Lobby Create Success! LobbyId:109775244551627790
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+SerializationException: Type TestByteClass is not marked as Serializable.
+  at System.Runtime.Serialization.Formatters.Binary.BinaryCommon.CheckSerializable (System.Type type, ISurrogateSelector selector, StreamingContext context) [0x00000] in <filename unknown>:0 
+  at System.Runtime.Serialization.Formatters.Binary.ObjectWriter.GetObjectData (System.Object obj, System.Runtime.Serialization.Formatters.Binary.TypeMetadata& metadata, System.Object& data) [0x00000] in <filename unknown>:0 
+  at System.Runtime.Serialization.Formatters.Binary.ObjectWriter.WriteObject (System.IO.BinaryWriter writer, Int64 id, System.Object obj) [0x00000] in <filename unknown>:0 
+  at System.Runtime.Serialization.Formatters.Binary.ObjectWriter.WriteObjectInstance (System.IO.BinaryWriter writer, System.Object obj, Boolean isValueObject) [0x00000] in <filename unknown>:0 
+  at System.Runtime.Serialization.Formatters.Binary.ObjectWriter.WriteQueuedObjects (System.IO.BinaryWriter writer) [0x00000] in <filename unknown>:0 
+  at System.Runtime.Serialization.Formatters.Binary.ObjectWriter.WriteObjectGraph (System.IO.BinaryWriter writer, System.Object obj, System.Runtime.Remoting.Messaging.Header[] headers) [0x00000] in <filename unknown>:0 
+  at System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.Serialize (System.IO.Stream serializationStream, System.Object graph, System.Runtime.Remoting.Messaging.Header[] headers) [0x00000] in <filename unknown>:0 
+  at System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.Serialize (System.IO.Stream serializationStream, System.Object graph) [0x00000] in <filename unknown>:0 
+  at HelperFunction.ObjectToByteArray (System.Object obj) [0x00000] in <filename unknown>:0 
+  at SteamStatsAndAchievements.SendNetMessage () [0x00000] in <filename unknown>:0 
+  at SteamStatsAndAchievements.OnLobbyCreated (LobbyCreated_t pCallback, Boolean ioFailed) [0x00000] in <filename unknown>:0 
+  at Steamworks.CallResult`1[Steamworks.LobbyCreated_t].OnRunCallResult (IntPtr pvParam, Boolean bFailed, UInt64 hSteamAPICall_) [0x00000] in <filename unknown>:0 
+UnityEngine.DebugLogHandler:Internal_LogException(Exception, Object)
+UnityEngine.DebugLogHandler:LogException(Exception, Object)
+UnityEngine.Logger:LogException(Exception, Object)
+UnityEngine.Debug:LogException(Exception)
+Steamworks.CallbackDispatcher:ExceptionHandler(Exception)
+Steamworks.CallResult`1:OnRunCallResult(IntPtr, Boolean, UInt64)
+Steamworks.NativeMethods:SteamAPI_RunCallbacks()
+Steamworks.SteamAPI:RunCallbacks()
+SteamManager:Update()
+ 
+(Filename:  Line: -1)
+
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 5260 -> priority: 1 
