@@ -57,7 +57,11 @@ class SteamStatsAndAchievements : MonoBehaviour {
     protected CallResult<LobbyCreated_t> m_LobbyCreated;
     protected CallResult<LobbyMatchList_t> m_LobbyMatchList;
     protected Callback<LobbyChatUpdate_t> m_LobbyChatUpdate;
-
+    protected CallResult<LobbyEnter_t> m_LobbyEnter;
+    protected Callback<GameRichPresenceJoinRequested_t> m_GameRichJoinRequested;
+    protected Callback<GameLobbyJoinRequested_t> m_GameLobbyJoinRequested;
+    //P2P相关回调
+    protected Callback<P2PSessionRequest_t> m_P2PSessionRequest;
     //杂变量
     protected CSteamID m_LobbyId;
     protected bool m_IsInLobby;
@@ -77,8 +81,12 @@ class SteamStatsAndAchievements : MonoBehaviour {
         m_LobbyCreated = CallResult<LobbyCreated_t>.Create(OnLobbyCreated);
         m_LobbyMatchList = CallResult<LobbyMatchList_t>.Create(OnLobbyMatchedList);
         m_LobbyChatUpdate = Callback<LobbyChatUpdate_t>.Create(OnLobbyChatUpdated);
-		// These need to be reset to get the stats upon an Assembly reload in the Editor.
-		m_bRequestedStats = false;
+        m_LobbyEnter = CallResult<LobbyEnter_t>.Create(OnLobbyEntered);
+        m_GameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);
+        //p2p相关回调
+        m_P2PSessionRequest = Callback<P2PSessionRequest_t>.Create(OnP2PRequest);
+        // These need to be reset to get the stats upon an Assembly reload in the Editor.
+        m_bRequestedStats = false;
 		m_bStatsValid = false;
 	}
 
@@ -315,7 +323,7 @@ class SteamStatsAndAchievements : MonoBehaviour {
             Debug.LogWarning("Lobby Create Failed!");
         }
         //test
-        SendNetMessage();
+        //SendNetMessage();
     }
     private void OnLobbyMatchedList(LobbyMatchList_t pCallback,bool ioFailed) {
         if (ioFailed) { return; }
@@ -330,23 +338,48 @@ class SteamStatsAndAchievements : MonoBehaviour {
         }
     }
     private void OnLobbyChatUpdated(LobbyChatUpdate_t pCallback) {
-       
+        UpdateLobby();
+    }
+    private void UpdateLobby() {
+        if (!m_IsInLobby) { return; }
         var membernum = SteamMatchmaking.GetNumLobbyMembers(m_LobbyId);
-
         Debug.Log("房间更新，当前人数为：" + membernum);
 
         List<string> members = new List<string>();
-        for(int i = 0; i < membernum; i++) {
+        for (int i = 0; i < membernum; i++) {
             var memberId = SteamMatchmaking.GetLobbyMemberByIndex(m_LobbyId, i);
-           
+
             members.Add(SteamFriends.GetFriendPersonaName(memberId));
             GameObject.Find("LobbyPanel").GetComponent<LobbyPanel>().updateMember(members.ToArray());
         }
     }
-	//-----------------------------------------------------------------------------
-	// Purpose: Display the user's stats and achievements
-	//-----------------------------------------------------------------------------
-	public void Render() {
+    private void OnLobbyEntered(LobbyEnter_t pCallback, bool ioFailed) {
+        Debug.Log("enter room success");
+
+        m_LobbyId = new CSteamID(pCallback.m_ulSteamIDLobby);
+        
+        var lobbyname = SteamMatchmaking.GetLobbyData(m_LobbyId, "name");
+        Debug.Log("lobbyname: " + lobbyname);
+        GameObject.Find("LobbyPanel").GetComponent<LobbyPanel>().createLobby(lobbyname);
+        m_IsInLobby = true;
+        UpdateLobby();
+    }
+    private void OnGameLobbyJoinRequested(GameLobbyJoinRequested_t pCallback) {
+        Debug.Log("finsih request join game lobby from friend success");
+        EnterLobby(pCallback.m_steamIDLobby);
+    }
+
+    #region P2P相关回调
+    private void OnP2PRequest(P2PSessionRequest_t pCallback) {
+        var steamId = pCallback.m_steamIDRemote;
+        var name = SteamFriends.GetFriendPersonaName(steamId);
+        Debug.Log("p2p request from " + name);
+    }
+    #endregion
+    //-----------------------------------------------------------------------------
+    // Purpose: Display the user's stats and achievements
+    //-----------------------------------------------------------------------------
+    public void Render() {
 		if (!SteamManager.Initialized) {
 			GUILayout.Label("Steamworks not Initialized");
 			return;
@@ -413,7 +446,10 @@ class SteamStatsAndAchievements : MonoBehaviour {
         if (!m_IsInLobby) { return; }
         SteamFriends.ActivateGameOverlayInviteDialog(m_LobbyId);
     }
-   
+    public void EnterLobby(CSteamID LobbyId) {
+        SteamAPICall_t handle = SteamMatchmaking.JoinLobby(LobbyId);
+        m_LobbyEnter.Set(handle);
+    }
     //test 
     public void SendNetMessage() {
         TestByteClass tb = new TestByteClass();
