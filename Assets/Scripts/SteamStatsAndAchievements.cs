@@ -89,7 +89,7 @@ class SteamStatsAndAchievements : MonoBehaviour {
         m_bRequestedStats = false;
 		m_bStatsValid = false;
 	}
-
+    //test commit
 	private void Update() {
 		if (!SteamManager.Initialized)
 			return;
